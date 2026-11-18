@@ -1,6 +1,11 @@
 # Publishing changes and releases
 
-Two separate things:
+For maintainers of `sschaefer-esn/foriq`: only accounts with write access to the
+repository can publish releases. Contributors push to their fork and open a pull
+request ([CONTRIBUTING.md](../CONTRIBUTING.md)); anyone can build the app themselves with
+`npm run dist` (README › Commands).
+
+Three separate things:
 
 | | What | Command |
 |---|---|---|

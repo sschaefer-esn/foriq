@@ -47,16 +47,18 @@ bash scripts/install.sh "file://$PWD/$DMG" "$(shasum -a 256 "$DMG" | cut -d' ' -
 ## Installing a release via the Terminal
 
 Foriq is installed from the Terminal rather than by downloading the DMG in a browser.
-`foriq-app/scripts/install.sh` downloads the DMG with `curl`, checks the SHA-256
-published with the release, copies `Foriq.app` to `/Applications` (asking before it
-replaces an existing copy) and leaves the data directory alone:
+`foriq-app/scripts/install.sh` downloads the DMG of the newest
+[release](https://github.com/sschaefer-esn/foriq/releases) with `curl`, checks the
+SHA-256 published with it (`SHA256SUMS`), copies `Foriq.app` to `/Applications` (asking
+before it replaces an existing copy) and leaves the data directory alone:
 
 ```bash
-# PLACEHOLDER: there is no public release yet; take the URL and SHA-256 from the
-# release page once there is one.
-FORIQ_DMG_URL=<release DMG URL> FORIQ_DMG_SHA256=<sha256> bash install.sh
+curl -fsSL https://foriq.de/install | bash
 open /Applications/Foriq.app
 ```
+
+A specific DMG: `FORIQ_DMG_URL=<DMG URL> FORIQ_DMG_SHA256=<sha256> bash install.sh`.
+The same command updates an existing install (quit Foriq first).
 
 **Why not notarised:** Developer ID signing and Apple's notarisation need a paid Apple
 Developer account; Foriq does without. The app is signed ad hoc (required for Apple

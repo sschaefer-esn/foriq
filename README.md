@@ -18,7 +18,7 @@ Everything from the repository root, one terminal, Ctrl+C stops it:
 Then open **http://localhost:3000** (API on :8005). Code changes reload by themselves.
 
 ```bash
-./ship.sh "what changed"    # commit everything and push to GitHub
+./ship.sh "what changed"    # commit everything and push to your repository (your fork)
 ./cleanup.sh                # show leftovers (empty folders, caches); --yes removes, --builds adds build outputs
 cd foriq-app && npm run release:local    # put the current state into /Applications/Foriq.app on this Mac
 ```
@@ -31,23 +31,9 @@ cd foriq-app && npm run release:local    # put the current state into /Applicati
   `cp webapp/.env.example webapp/.env` and set `DATABASE_URL`, `JWT_SECRET`.
 - Other ports: `FORIQ_DEV_BACKEND_PORT`, `FORIQ_DEV_FRONTEND_PORT`. Only one web UI dev
   server can run per checkout.
-
-### Release: make the Mac app downloadable
-
-```bash
-# 1. raise "version" in foriq-app/package.json (e.g. 0.2.0), then
-./ship.sh "Release 0.2.0"
-# 2. build the app and publish it as a GitHub release (DMG + install.sh + SHA256SUMS)
-cd foriq-app && npm run release:github
-```
-
-3. Users install or update with one line (foriq.de/install points to the newest release):
-
-```bash
-curl -fsSL https://foriq.de/install | bash
-```
-
-Details, signing and why the Terminal: [docs/releasing.md](docs/releasing.md).
+- `./ship.sh` stages everything (`git add -A`), refuses if secrets, `ml/` or database
+  dumps would be published, commits and pushes the current branch. Contributions to
+  this project go through a pull request from your fork ([CONTRIBUTING.md](CONTRIBUTING.md)).
 
 ## How it works
 
@@ -88,14 +74,16 @@ Server: a Mac with Apple Silicon.
 
 ## Install
 
-Once a release is published, one line in the Terminal installs or updates Foriq
-(see [docs/releasing.md](docs/releasing.md)):
+One line in the Terminal installs or updates Foriq from the newest
+[release](https://github.com/sschaefer-esn/foriq/releases):
 
 ```bash
 curl -fsSL https://foriq.de/install | bash
 ```
 
-Until then, build the app yourself (see *App* below) and install it from the Terminal:
+It downloads the DMG, checks its SHA-256 and copies `Foriq.app` to `/Applications`
+(why the Terminal: [foriq-app/README.md › Signing](foriq-app/README.md#signing)).
+To install your own build instead (see *App* below):
 
 ```bash
 cd foriq-app
@@ -136,7 +124,7 @@ npm start                   # run from source (backend from webapp/backend, uses
 npm run start:test          # isolated instance: own data dir, ports 8421/54330, no mDNS
 npm run dist                # web UI + backend + firmware + app -> dist/Foriq-<version>-arm64.dmg
 npm run release:local       # builds everything, quits Foriq, replaces /Applications/Foriq.app, restarts it, checks :8420
-npm run release:github      # builds the DMG and publishes a GitHub release (docs/releasing.md)
+npm run release:github      # maintainers: build the DMG and publish a GitHub release (docs/releasing.md)
 npm run sim                 # simulated sensor against the running app
 npm test                    # i18n checks (plain node, no Electron)
 ```
@@ -239,7 +227,7 @@ After an update run the backend tests (unit + integration), the frontend checks 
 - [Sensor firmware](docs/firmware.md): building, flashing, setup portal, versioning
 - [Device protocol](docs/device-protocol.md): sensor API, binary hit format, OTA
 - [Development](docs/development.md): how the pieces fit together in development, schema rules, conventions
-- [Publishing and releases](docs/releasing.md): push, GitHub release of the Mac app, signing
+- [Publishing and releases](docs/releasing.md) (maintainers): push, GitHub release of the Mac app, signing
 - [Foriq app](foriq-app/README.md), [backend](webapp/backend/README.md), [web UI](webapp/frontend/README.md), [firmware](firmware-cpp/README.md), [contributing](CONTRIBUTING.md)
 
 ### Working with a coding agent

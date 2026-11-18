@@ -1,0 +1,4 @@
+# Test-only packages (not part of the app bundle).
+-r requirements.txt
+# starlette.testclient (used by some tests) needs httpx2.
+httpx2==2.16.2

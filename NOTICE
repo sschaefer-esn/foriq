@@ -1,0 +1,16 @@
+Foriq
+Copyright 2026 Ernst Schäfer Nachf. GmbH (Gesenkschmiede)
+
+Licensed under the GNU Affero General Public License, version 3 only
+(SPDX: AGPL-3.0-only); see LICENSE.
+
+Trademark notice: The name "Foriq" and the Foriq logo are not covered by this
+license. Modified versions and redistributions may use the code under the terms
+of the license, but must not appear under the name or logo "Foriq".
+
+Third-party font: Inter (https://github.com/rsms/inter), Copyright 2020 The Inter
+Project Authors, licensed under the SIL Open Font License 1.1. Bundled as
+webapp/frontend/public/fonts/Inter-Variable.ttf; license text in
+webapp/frontend/public/fonts/Inter-OFL.txt.
+
+Other third-party components: see THIRD_PARTY_NOTICES.md.

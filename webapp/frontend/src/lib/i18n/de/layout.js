@@ -1,0 +1,26 @@
+const messages = {
+  "layout.nav.dashboard": "Dashboard",
+  "layout.nav.notifications": "Meldungen",
+  "layout.nav.sensors": "Geräte",
+  "layout.nav.floorPlan": "Hallenlayout",
+  "layout.nav.data": "Daten",
+  "layout.nav.export": "Export",
+  "layout.nav.settings": "Einstellungen",
+  "layout.unreadNotifications": "{count} ungelesene Meldungen",
+  "layout.menu.open": "Menü öffnen",
+  "layout.menu.close": "Menü schließen",
+  "layout.alertType.noHits": "Stillstand",
+  "layout.alertType.deviceOffline": "Sensor offline",
+  "layout.notifications.title": "Meldungen",
+  "layout.notifications.markAllRead": "Alle als gelesen",
+  "layout.notifications.empty": "Keine neuen Meldungen.",
+  "layout.notifications.ended": "beendet",
+  "layout.notifications.markRead": "Gelesen",
+  "layout.notifications.openCenter": "Benachrichtigungscenter öffnen",
+  "layout.appearance": "Erscheinungsbild",
+  "layout.theme.light": "Hell",
+  "layout.theme.dark": "Dunkel",
+  "layout.signOut": "Abmelden",
+};
+
+export default messages;

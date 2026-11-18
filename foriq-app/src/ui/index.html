@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'" />
+    <title>Foriq</title>
+    <link rel="stylesheet" href="ui.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">Foriq</div>
+      <div id="overall" class="overall">…</div>
+    </header>
+
+    <section class="address">
+      <div class="label" data-i18n="ui.addressLabel">Adresse für Browser und Sensoren</div>
+      <div id="url" class="url">–</div>
+      <div id="alt" class="alt"></div>
+    </section>
+
+    <ul id="services" class="services"></ul>
+
+    <ul id="backup" class="services backup"></ul>
+
+    <section id="sensor" class="sensor"></section>
+
+    <section class="options">
+      <label class="toggle" id="autostart-row">
+        <input type="checkbox" id="autostart" />
+        <span data-i18n="ui.autostart">Beim Anmelden automatisch starten</span>
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="prevent-sleep" />
+        <span data-i18n="ui.preventSleep">Ruhezustand verhindern, solange Foriq läuft</span>
+      </label>
+      <label class="toggle static">
+        <span data-i18n="ui.language">Sprache</span>
+        <select id="language">
+          <option value="en">English</option>
+          <option value="de" selected>Deutsch</option>
+        </select>
+      </label>
+    </section>
+
+    <footer>
+      <button id="open" class="primary" data-i18n="ui.openBrowser">Im Browser öffnen</button>
+      <button id="toggle" data-i18n="ui.stop">Stoppen</button>
+      <button id="logs" class="ghost" data-i18n="ui.logs">Logs</button>
+      <button id="reset-password" class="ghost" data-i18n="ui.forgotPassword">Passwort vergessen</button>
+    </footer>
+
+    <script src="ui.js"></script>
+  </body>
+</html>

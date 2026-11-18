@@ -1,0 +1,16 @@
+# Packages used directly by the backend (Python 3.11+); pip resolves transitive
+# dependencies itself.
+fastapi==0.164.0
+pydantic==2.14.3
+uvicorn[standard]==0.54.0
+# The engine pins the psycopg2 driver (utils/db.py); 2.1 would otherwise pick psycopg 3.
+SQLAlchemy==2.1.9
+psycopg2-binary==2.9.13
+PyJWT==2.15.1
+# bcrypt 5 raises on passwords over 72 bytes; utils/auth_utils.py limits and truncates.
+bcrypt==5.0.0
+python-dotenv==1.2.4
+slowapi==0.1.10
+openpyxl==3.1.5
+# Time zone data for zoneinfo in case the system has none.
+tzdata==2026.6

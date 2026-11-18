@@ -1,0 +1,25 @@
+const messages = {
+  "auth.error.invalidCredentials": "Invalid username or password",
+  "auth.error.serverUnreachable": "Server unreachable",
+  "auth.field.username": "Username",
+  "auth.field.password": "Password",
+  "auth.login.subtitle": "Sign in to continue.",
+  "auth.login.title": "Sign in",
+  "auth.login.rememberMe": "Stay signed in",
+  "auth.login.submit": "Sign in",
+  "auth.login.submitting": "Signing in...",
+  "auth.login.forgotPassword": "Forgot your password? An admin can reset it under Settings › Users; the owner password is reset in the status window of the Foriq app.",
+  "auth.register.subtitle": "Initial setup",
+  "auth.register.title": "Create admin account",
+  "auth.register.companyName": "Company name",
+  "auth.register.companyPlaceholder": "My Company Ltd",
+  "auth.register.defaultCompanyName": "My company",
+  "auth.register.yourName": "Your name",
+  "auth.register.namePlaceholder": "Jane Doe",
+  "auth.register.submit": "Set up",
+  "auth.register.submitting": "Setting up...",
+  "auth.register.signInFailed": "Registration succeeded, but sign-in failed. Please sign in manually.",
+  "auth.register.failed": "Registration failed",
+};
+
+export default messages;

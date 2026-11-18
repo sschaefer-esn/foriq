@@ -1,0 +1,49 @@
+# OS / editors
+.DS_Store
+~$*
+.vscode/
+.idea/
+*.swp
+
+# Claude Code local state
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+.claude/worktrees/
+
+# Secrets / environment
+.env
+.env.*
+!.env.example
+*.pem
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Build output
+build/
+dist/
+
+# PlatformIO
+.pio/
+
+# Logs
+*.log
+
+# Database dumps
+*.dump
+
+# Local ML workspace (private, never versioned)
+/ml/
+
+# Optional licensed display font (not redistributable, see webapp/frontend/README.md)
+/webapp/frontend/public/fonts/ClashGrotesk-Variable.ttf

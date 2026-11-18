@@ -1,0 +1,25 @@
+const messages = {
+  "charts.mode.day": "Day",
+  "charts.mode.week": "Week",
+  "charts.mode.month": "Month",
+  "charts.pieces": "pcs",
+  "charts.piecesPerHour": "pcs/h",
+  "charts.dragHint": "Drag in the chart to analyse a time range",
+  "charts.clearSelection": "Clear time range selection",
+  "charts.measurements": "Measurements",
+  "charts.selectRange": "Select a time range in the day chart",
+  "charts.subtitle.tenMinute": "10-minute intervals",
+  "charts.subtitle.daily": "Daily values",
+  "charts.subtitle.week": "Week {week} · {start} – {end}",
+  "charts.title.day": "Daily count",
+  "charts.title.week": "Weekly count",
+  "charts.title.month": "Monthly count",
+  "charts.timeline.title": "Daily activity",
+  "charts.timeline.sensorFallback": "Sensor",
+  "charts.timeline.cellTitle": "{name} · {from}:00–{to}:00 · {count} pcs",
+  "charts.timeline.low": "low",
+  "charts.timeline.high": "high",
+  "charts.timeline.legend": "pcs/h · peak {max}/h",
+};
+
+export default messages;

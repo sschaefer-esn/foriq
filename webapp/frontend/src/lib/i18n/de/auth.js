@@ -1,0 +1,25 @@
+const messages = {
+  "auth.error.invalidCredentials": "Ungültige Anmeldedaten",
+  "auth.error.serverUnreachable": "Server nicht erreichbar",
+  "auth.field.username": "Benutzername",
+  "auth.field.password": "Passwort",
+  "auth.login.subtitle": "Melden Sie sich an, um fortzufahren.",
+  "auth.login.title": "Anmelden",
+  "auth.login.rememberMe": "Angemeldet bleiben",
+  "auth.login.submit": "Anmelden",
+  "auth.login.submitting": "Wird angemeldet...",
+  "auth.login.forgotPassword": "Passwort vergessen? Ein Admin setzt es unter Einstellungen › Benutzer neu, das Owner-Passwort im Statusfenster der Foriq-App.",
+  "auth.register.subtitle": "Ersteinrichtung",
+  "auth.register.title": "Admin-Zugang anlegen",
+  "auth.register.companyName": "Firmenname",
+  "auth.register.companyPlaceholder": "Meine Firma GmbH",
+  "auth.register.defaultCompanyName": "Meine Firma",
+  "auth.register.yourName": "Ihr Name",
+  "auth.register.namePlaceholder": "Max Mustermann",
+  "auth.register.submit": "Einrichten",
+  "auth.register.submitting": "Wird eingerichtet...",
+  "auth.register.signInFailed": "Registrierung erfolgreich, aber Anmeldung fehlgeschlagen. Bitte manuell anmelden.",
+  "auth.register.failed": "Registrierung fehlgeschlagen",
+};
+
+export default messages;

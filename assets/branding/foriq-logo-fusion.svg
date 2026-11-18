@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 82" width="196" height="82">
+  <path fill="none" stroke="#cc0000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
+        d="M 36,10 L 12,10 L 12,66
+           M 12,36 L 29,36
+           M 42,46 A 20,20 0 1 1 82,46 A 20,20 0 1 1 42,46
+           M 92,26 L 92,66
+           M 92,38 Q 92,26 106,26 L 112,26
+           M 120,48 L 120,66
+           M 126,26 L 126,66
+           M 132,40 L 132,66
+           M 140,46 A 20,20 0 1 1 180,46 A 20,20 0 1 1 140,46
+           M 180,46 L 180,78"/>
+</svg>

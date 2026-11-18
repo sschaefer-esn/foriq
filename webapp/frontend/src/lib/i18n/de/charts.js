@@ -1,0 +1,25 @@
+const messages = {
+  "charts.mode.day": "Tag",
+  "charts.mode.week": "Woche",
+  "charts.mode.month": "Monat",
+  "charts.pieces": "Stück",
+  "charts.piecesPerHour": "Stück/Std.",
+  "charts.dragHint": "Im Diagramm ziehen, um einen Zeitraum auszuwerten",
+  "charts.clearSelection": "Zeitraumauswahl aufheben",
+  "charts.measurements": "Messungen",
+  "charts.selectRange": "Zeitraum im Tagesdiagramm auswählen",
+  "charts.subtitle.tenMinute": "10-Minuten-Intervalle",
+  "charts.subtitle.daily": "Tageswerte",
+  "charts.subtitle.week": "KW {week} · {start} – {end}",
+  "charts.title.day": "Tages-Stückzahl",
+  "charts.title.week": "Wochen-Stückzahl",
+  "charts.title.month": "Monats-Stückzahl",
+  "charts.timeline.title": "Tagesverlauf",
+  "charts.timeline.sensorFallback": "Gerät",
+  "charts.timeline.cellTitle": "{name} · {from}–{to} Uhr · {count} Stk",
+  "charts.timeline.low": "wenig",
+  "charts.timeline.high": "viel",
+  "charts.timeline.legend": "Stk/h · Spitze {max}/h",
+};
+
+export default messages;

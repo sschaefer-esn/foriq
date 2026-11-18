@@ -20,7 +20,6 @@ Then open **http://localhost:3000** (API on :8005). Code changes reload by thems
 ```bash
 ./ship.sh "what changed"    # commit everything and push to your repository (your fork)
 ./cleanup.sh                # show leftovers (empty folders, caches); --yes removes, --builds adds build outputs
-cd foriq-app && npm run release:local    # put the current state into /Applications/Foriq.app on this Mac
 ```
 
 - `./dev.sh app` takes the connection and keys from the app's `secrets.json` and turns the
@@ -34,6 +33,23 @@ cd foriq-app && npm run release:local    # put the current state into /Applicati
 - `./ship.sh` stages everything (`git add -A`), refuses if secrets, `ml/` or database
   dumps would be published, commits and pushes the current branch. Contributions to
   this project go through a pull request from your fork ([CONTRIBUTING.md](CONTRIBUTING.md)).
+
+### Build your own Mac app
+
+Changed the code (detector, web UI, firmware …)? One command builds the app from this
+checkout and installs it on this Mac:
+
+```bash
+./build-app.sh              # build everything, replace /Applications/Foriq.app, restart it (data is kept)
+./build-app.sh --dmg        # only build foriq-app/dist/Foriq-<version>-arm64.dmg, e.g. for another Mac
+```
+
+It first checks the requirements (Homebrew, Node.js, Python 3.11+, PlatformIO,
+`postgresql@18` for the backup tools) and prints the install command for anything
+missing, then installs the npm packages and the Python virtualenv itself. The first
+build takes several minutes; later builds reuse the caches. Sensors with auto-update
+pick up the firmware of your build on their next sync – after a firmware change, raise
+`firmware-cpp/VERSION`, because sensors never install an older or equal version.
 
 ## How it works
 
@@ -83,7 +99,8 @@ curl -fsSL https://foriq.de/install | bash
 
 It downloads the DMG, checks its SHA-256 and copies `Foriq.app` to `/Applications`
 (why the Terminal: [foriq-app/README.md › Signing](foriq-app/README.md#signing)).
-To install your own build instead (see *App* below):
+To build and install your own variant instead: `./build-app.sh` (see
+[Quick start](#build-your-own-mac-app)). The manual steps:
 
 ```bash
 cd foriq-app
@@ -252,7 +269,7 @@ webapp/sql/       PostgreSQL schema (idempotent, applied on every start)
 firmware-cpp/     Sensor firmware (PlatformIO)
 assets/branding/  Logo and icon sources
 docs/             Documentation (docs/agents/: playbooks for coding agents)
-dev.sh, ship.sh, cleanup.sh   development start, push, clean-up
+dev.sh, build-app.sh, ship.sh, cleanup.sh   development, own app build, push, clean-up
 ```
 
 ## Project status

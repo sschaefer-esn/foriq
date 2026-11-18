@@ -73,6 +73,7 @@ Full, verified list: `README.md` → *Commands*. Keep both in sync.
 # Everyday (from the repository root)
 ./dev.sh                                # backend :8005 + web UI :3000 (DB from webapp/.env)
 ./dev.sh app                            # same against the running Foriq app's DB (live data, workers off)
+./build-app.sh [--dmg]                  # check requirements, build the app, replace /Applications/Foriq.app (or DMG only)
 ./ship.sh "message"                     # git add -A, commit, push (refuses secrets/ml/)
 ./cleanup.sh [--builds] [--yes]         # empty folders, caches, build outputs
 

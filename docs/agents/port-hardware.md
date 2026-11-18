@@ -63,7 +63,8 @@ mode (32 samples) drained every loop, magnitude computed in the driver.
 5. Add the target to OTA (`ota.py`), the app build and the flasher; test an OTA update.
 6. Run the host detector test, backend tests, frontend checks
    ([CONTRIBUTING.md › Checks](../../CONTRIBUTING.md#checks-before-submitting)).
-7. Bump `firmware-cpp/VERSION` (MINOR: new hardware), document the board in
+7. Build and install the app with both targets: `./build-app.sh`.
+8. Bump `firmware-cpp/VERSION` (MINOR: new hardware), document the board in
    `docs/firmware.md` (*Supported hardware*), `README.md` (*Supported hardware*) and
    `CHANGELOG.md`.
 

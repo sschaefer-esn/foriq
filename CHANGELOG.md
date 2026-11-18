@@ -12,7 +12,8 @@ self-hosted application that runs entirely in the local network.
 ### Added
 
 - Repository scripts: `./dev.sh` (backend and web UI with hot reload in one terminal,
-  optionally against the running app's database), `./ship.sh` (commit and push with a
+  optionally against the running app's database), `./build-app.sh` (checks the build
+  requirements and builds and installs the Mac app from the checkout, or a DMG), `./ship.sh` (commit and push with a
   check against publishing secrets), `./cleanup.sh` (empty folders, caches, builds).
 - `npm run release:github` in `foriq-app/`: builds the DMG and publishes it with
   `install.sh` and `SHA256SUMS` as a GitHub release; `install.sh` without arguments

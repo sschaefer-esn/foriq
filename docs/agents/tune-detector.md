@@ -146,7 +146,8 @@ Rules:
   reproduces the user's problem first, then fix it; the test must pass
   (command in [firmware.md › Unit test](../firmware.md#unit-test)).
 - Bump `firmware-cpp/VERSION` (MINOR for a new behaviour), build with
-  `pio run -e m5sticks3` (size check included), update the "Stroke detection" section of
+  `pio run -e m5sticks3` (size check included), put it into service with
+  `./build-app.sh` (sensors with auto-update fetch it), update the "Stroke detection" section of
   `docs/device-protocol.md` and `CHANGELOG.md`.
 - Ideas that fit the existing structure: band-pass/high-pass before squaring (removes
   slow tilt or very high-frequency hum), a minimum active duration, a second threshold

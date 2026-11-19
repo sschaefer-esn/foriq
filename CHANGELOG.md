@@ -6,22 +6,36 @@ Firmware versions follow `firmware-cpp/VERSION`.
 
 ## [Unreleased]
 
+## [0.2.0] – 2026-11-19
+
+### Added
+
+- The Mac app checks once a day for a new release (switch in the status window) and
+  updates itself on a click: download, SHA-256 check, quit, install via the bundled
+  `install.sh`, restart. Data stays; a failed install keeps the previous version and is
+  reported at the next start (`logs/update.log`). Version 0.1.0 has no updater: update
+  it once with `curl -fsSL https://foriq.de/install | bash`.
+- `./build-app.sh`: checks the build requirements, then builds and installs the Mac app
+  from the checkout (or only the DMG with `--dmg`).
+- `docs/agents/getting-started.md` and the Claude Code skill `/getting-started`: a coding
+  agent leads non-technical users from an empty Mac to counting sensors.
+
+## [0.1.0] – 2026-11-18
+
 First open-source release. Foriq is restructured from a hosted service into a
 self-hosted application that runs entirely in the local network.
 
 ### Added
 
 - Repository scripts: `./dev.sh` (backend and web UI with hot reload in one terminal,
-  optionally against the running app's database), `./build-app.sh` (checks the build
-  requirements and builds and installs the Mac app from the checkout, or a DMG), `./ship.sh` (commit and push with a
+  optionally against the running app's database), `./ship.sh` (commit and push with a
   check against publishing secrets), `./cleanup.sh` (empty folders, caches, builds).
 - `npm run release:github` in `foriq-app/`: builds the DMG and publishes it with
   `install.sh` and `SHA256SUMS` as a GitHub release; `install.sh` without arguments
   installs the newest release.
 - Backend: `FORIQ_NO_WORKERS=1` disables the background workers.
 - Playbooks for coding agents (`docs/agents/`, `AGENTS.md`, Claude Code skills
-  `/getting-started`, `/tune-detector` and `/port-hardware`); `getting-started.md` leads
-  non-technical users from an empty Mac to counting sensors; READMEs for the backend and the firmware;
+  `/tune-detector` and `/port-hardware`); READMEs for the backend and the firmware;
   `docs/releasing.md`.
 
 ### Changed

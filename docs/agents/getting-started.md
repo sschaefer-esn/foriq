@@ -141,9 +141,11 @@ The user wants a different counting behaviour, other hardware or an own build.
 
 ## 7. Updates and problems
 
-- **Update Foriq:** quit Foriq (menu bar icon › *Foriq beenden* / *Quit Foriq*), then
+- **Update Foriq:** the Foriq window shows a new version once a day; the user clicks
+  *Aktualisieren* / *Update* and Foriq restarts with it (data stays). By hand: quit
+  Foriq (menu bar icon › *Foriq beenden* / *Quit Foriq*), then
   `FORIQ_ASSUME_YES=1 bash -c "$(curl -fsSL https://foriq.de/install)"` after the user
-  agreed to replace the app; data stays. Sensors with auto-update fetch new firmware.
+  agreed to replace the app. Sensors with auto-update fetch the new firmware afterwards.
 - **Port 8420 in use:** another Foriq or program uses it; find it with
   `lsof -iTCP:8420 -sTCP:LISTEN`.
 - **Sensor does not appear:** Wi-Fi is 2.4 GHz? Mac and sensor in the same network?

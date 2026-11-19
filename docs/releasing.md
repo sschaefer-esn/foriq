@@ -43,6 +43,10 @@ Users install or update with one line (`foriq.de/install` redirects to
 curl -fsSL https://foriq.de/install | bash
 ```
 
+Installed apps find the release by themselves (daily check in the status window,
+`foriq-app/src/updater.js`) and update on a click. Both rely on `SHA256SUMS` containing
+the line `<sha256>  Foriq-<version>-arm64.dmg` – keep that format.
+
 `install.sh` without arguments reads `SHA256SUMS` of the newest release, downloads the
 DMG, checks its checksum and copies `Foriq.app` to `/Applications`. The repository it
 reads from is `GITHUB_REPO` in `foriq-app/scripts/install.sh` (override:

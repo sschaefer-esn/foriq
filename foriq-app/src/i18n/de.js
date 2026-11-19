@@ -25,6 +25,7 @@ module.exports = {
   "tray.startServices": "Dienste starten",
   "tray.showLogs": "Logs anzeigen",
   "tray.quit": "Foriq beenden …",
+  "tray.update": "Auf Version {latest} aktualisieren …",
 
   // ─── Quit dialog ─────────────────────────────────────────────
   "quit.button": "Beenden",
@@ -174,4 +175,28 @@ module.exports = {
   "ui.sensor.multiple": "Mehrere Sticks erkannt – bitte nur einen anstecken.",
   "ui.sensor.setup": "Einrichten",
   "ui.sensor.erase": "Löschen",
+
+  // ─── Updates ─────────────────────────────────────────────────
+  "update.label": "Foriq {version}",
+  "update.idle": "Noch nicht nach Updates gesucht",
+  "update.off": "Automatische Suche nach Updates ist aus",
+  "update.checking": "Sucht nach Updates …",
+  "update.current": "Aktuell – keine neuere Version",
+  "update.available": "Version {latest} verfügbar",
+  "update.downloading": "Lädt Version {latest} … {pct} %",
+  "update.installing": "Wird installiert – Foriq startet gleich neu …",
+  "update.err.check": "Suche fehlgeschlagen (keine Internetverbindung?)",
+  "update.err.download": "Download fehlgeschlagen – bitte erneut versuchen",
+  "update.err.checksum": "Download beschädigt (Prüfsumme falsch) – bitte erneut versuchen",
+  "update.err.notWritable": "Keine Schreibrechte in {dir} – im Terminal aktualisieren: curl -fsSL https://foriq.de/install | bash",
+  "update.err.installFailed": "Update auf {version} fehlgeschlagen, die bisherige Version läuft weiter (Details: Logs › update.log)",
+  "update.confirm.message": "Foriq auf Version {latest} aktualisieren?",
+  "update.confirm.detail":
+    "Foriq lädt die neue Version (ca. 260 MB), beendet sich und startet nach etwa einer halben Minute neu. Die Sensoren puffern ihre Hübe in dieser Zeit. Datenbank, Einstellungen und Sicherungen bleiben erhalten.",
+  "update.confirm.ok": "Aktualisieren",
+  "ui.checkUpdates": "Täglich nach Updates suchen",
+  "ui.update.check": "Prüfen",
+  "ui.update.install": "Aktualisieren",
+  "ui.update.notes": "Neuigkeiten",
+  "ui.update.devOnly": "Nur in der installierten App (Foriq.app)",
 };

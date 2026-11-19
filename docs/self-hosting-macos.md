@@ -129,10 +129,17 @@ On the Mac itself, resolving `foriq.local` can occasionally fail for a moment; u
 
 ## Updating
 
-There is no automatic update. Quit Foriq completely (menu bar icon › Quit), then run
-`install.sh` again with the new release's URL and SHA-256 (or with a DMG you built as
-above); it asks before replacing the installed app. The database and secrets in the data directory are kept; the schema
-is migrated automatically on start (`webapp/sql/schema.sql` is applied on every start).
+Foriq checks once a day whether a new release exists and shows it in the status window
+(and in the menu bar menu). Click *Aktualisieren* / *Update*: Foriq downloads and
+verifies the new version, quits, installs it and starts again after about half a minute;
+sensors buffer their strokes meanwhile. Nothing is installed without that click. The
+check can be switched off in the status window (*Täglich nach Updates suchen*).
+
+By hand: quit Foriq completely (menu bar icon › Quit), then run
+`curl -fsSL https://foriq.de/install | bash` again (or `install.sh` with a DMG you built
+as above); it asks before replacing the installed app. Either way the database and
+secrets in the data directory are kept; the schema is migrated automatically on start
+(`webapp/sql/schema.sql` is applied on every start).
 
 On the build Mac, `npm run release:local` in `foriq-app/` does all of this in one go:
 it builds everything, quits the running app, replaces `/Applications/Foriq.app`,

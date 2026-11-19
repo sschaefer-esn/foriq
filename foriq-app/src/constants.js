@@ -10,6 +10,10 @@ const APP_NAME = "Foriq";
 const PUBLIC_PORT = 8420;
 const HOSTNAME = "foriq.local";
 
+// GitHub repository whose releases the app checks for updates (scripts/install.sh has
+// the same value). FORIQ_UPDATE_BASE overrides the release download URL for tests.
+const GITHUB_REPO = "sschaefer-esn/foriq";
+
 // Postgres only on 127.0.0.1, also fixed (stable address for psql and friends).
 const POSTGRES_PORT = 54329;
 
@@ -18,4 +22,4 @@ function defaultUserData() {
   return path.join(os.homedir(), "Library", "Application Support", APP_NAME);
 }
 
-module.exports = { APP_NAME, PUBLIC_PORT, HOSTNAME, POSTGRES_PORT, defaultUserData };
+module.exports = { APP_NAME, PUBLIC_PORT, HOSTNAME, POSTGRES_PORT, GITHUB_REPO, defaultUserData };

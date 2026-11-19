@@ -25,6 +25,7 @@ module.exports = {
   "tray.startServices": "Start services",
   "tray.showLogs": "Show logs",
   "tray.quit": "Quit Foriq …",
+  "tray.update": "Update to version {latest} …",
 
   // ─── Quit dialog ─────────────────────────────────────────────
   "quit.button": "Quit",
@@ -174,4 +175,28 @@ module.exports = {
   "ui.sensor.multiple": "Several sticks detected – please plug in only one.",
   "ui.sensor.setup": "Set up",
   "ui.sensor.erase": "Erase",
+
+  // ─── Updates ─────────────────────────────────────────────────
+  "update.label": "Foriq {version}",
+  "update.idle": "Not checked for updates yet",
+  "update.off": "Automatic update check is off",
+  "update.checking": "Checking for updates …",
+  "update.current": "Up to date – no newer version",
+  "update.available": "Version {latest} available",
+  "update.downloading": "Downloading version {latest} … {pct} %",
+  "update.installing": "Installing – Foriq restarts in a moment …",
+  "update.err.check": "Check failed (no internet connection?)",
+  "update.err.download": "Download failed – please try again",
+  "update.err.checksum": "Download damaged (checksum mismatch) – please try again",
+  "update.err.notWritable": "No write access to {dir} – update in the Terminal: curl -fsSL https://foriq.de/install | bash",
+  "update.err.installFailed": "Update to {version} failed, the previous version keeps running (details: Logs › update.log)",
+  "update.confirm.message": "Update Foriq to version {latest}?",
+  "update.confirm.detail":
+    "Foriq downloads the new version (about 260 MB), quits and starts again after about half a minute. Sensors buffer their strokes meanwhile. Database, settings and backups are kept.",
+  "update.confirm.ok": "Update",
+  "ui.checkUpdates": "Check for updates daily",
+  "ui.update.check": "Check",
+  "ui.update.install": "Update",
+  "ui.update.notes": "What's new",
+  "ui.update.devOnly": "Only in the installed app (Foriq.app)",
 };

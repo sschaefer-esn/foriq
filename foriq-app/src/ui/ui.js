@@ -11,6 +11,7 @@ const $ = (id) => document.getElementById(id);
 let current = null;
 let currentSettings = null;
 let currentSensor = null;
+let currentUpdate = null;
 
 // ─── Strings (dictionary for the active locale, sent by main.js) ─
 let STRINGS = {};
@@ -33,6 +34,7 @@ function applyI18n({ locale, strings }) {
   applyStatic();
   if (current) render(current);
   if (currentSettings) renderSettings(currentSettings);
+  if (currentUpdate) renderUpdate(currentUpdate);
   if (currentSensor) {
     lastSensorKey = "";
     onSensor(currentSensor);
@@ -106,6 +108,36 @@ function renderBackup(s) {
   $("backup").replaceChildren(li);
 }
 
+// Update row: version, state and the actions that fit it (texts come from main.js).
+const UPDATE_DOT = { available: "green", downloading: "yellow", installing: "yellow", checking: "yellow", error: "red" };
+function renderUpdate(u) {
+  currentUpdate = u;
+  const li = el("li");
+  li.append(el("span", `dot ${UPDATE_DOT[u.phase] || "grey"}`));
+  const text = el("div");
+  text.append(el("div", "name", u.label));
+  text.append(el("div", "detail", u.detail));
+  li.append(text);
+  const actions = el("div", "row-actions");
+  const busy = ["checking", "downloading", "installing"].includes(u.phase);
+  if (u.phase === "available") {
+    const install = el("button", "", t("ui.update.install"));
+    install.disabled = !u.canInstall;
+    if (!u.canInstall) install.title = t("ui.update.devOnly");
+    install.onclick = () => window.foriq.action("update-install");
+    const notes = el("button", "", t("ui.update.notes"));
+    notes.onclick = () => window.foriq.action("update-notes");
+    actions.append(install, notes);
+  } else {
+    const check = el("button", "", t("ui.update.check"));
+    check.disabled = busy;
+    check.onclick = () => window.foriq.action("update-check");
+    actions.append(check);
+  }
+  li.append(actions);
+  $("update").replaceChildren(li);
+}
+
 $("open").onclick = () => window.foriq.action("open-browser");
 $("logs").onclick = () => window.foriq.action("open-logs");
 $("reset-password").onclick = () => window.foriq.action("reset-password");
@@ -126,10 +158,12 @@ function renderSettings(st) {
   $("autostart-row").classList.toggle("disabled", !st.autostart.available);
   $("autostart-row").title = st.autostart.available ? "" : t("ui.autostartUnavailable");
   $("prevent-sleep").checked = st.preventSleep;
+  $("check-updates").checked = st.checkUpdates;
   if (st.language) $("language").value = st.language;
 }
 $("autostart").onchange = (e) => window.foriq.setSetting("autostart", e.target.checked).then(renderSettings);
 $("prevent-sleep").onchange = (e) => window.foriq.setSetting("preventSleep", e.target.checked).then(renderSettings);
+$("check-updates").onchange = (e) => window.foriq.setSetting("checkUpdates", e.target.checked).then(renderSettings);
 // main.js answers a language change with an "i18n" event (+ fresh status/sensor state).
 $("language").onchange = (e) => window.foriq.setSetting("language", e.target.value).then(renderSettings);
 
@@ -315,9 +349,11 @@ function onSensor(st) {
 window.foriq.onI18n(applyI18n);
 window.foriq.onStatus(render);
 window.foriq.onSensor(onSensor);
+window.foriq.onUpdate(renderUpdate);
 window.foriq.i18n().then((d) => {
   applyI18n(d);
   window.foriq.settings().then(renderSettings);
   window.foriq.status().then(render);
   window.foriq.sensor("state").then(onSensor);
+  window.foriq.update().then(renderUpdate);
 });

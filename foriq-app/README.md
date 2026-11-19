@@ -74,10 +74,19 @@ Homebrew casks) add to downloads and `curl` does not. So:
   Mac.* and confirm. Alternatively, after checking the DMG's SHA-256, remove the
   attribute in the Terminal: `xattr -dr com.apple.quarantine /Applications/Foriq.app`.
 
-There is deliberately no auto-update. To update, quit Foriq (menu bar icon › Quit), run
-`scripts/install.sh` with the new DMG (or replace `Foriq.app` in Applications) and start
-it again; the data directory is not touched and `schema.sql` migrates the database on
-start.
+**Updates:** the app looks for a new release once a day (`src/updater.js`; switch
+*Täglich nach Updates suchen* / *Check for updates daily*; *Prüfen* checks now). It
+reads `SHA256SUMS` of the newest GitHub release, so it needs no account and fails
+quietly without internet. It never installs on its own: *Aktualisieren* / *Update* (or
+the menu bar item) downloads the DMG to `~/Library/Caches/Foriq/updates`, verifies the
+SHA-256, quits Foriq and hands over to a detached helper. The helper waits until every
+Foriq process has exited, runs the bundled `install.sh` (stage, then swap – a failed copy
+leaves the old app), and opens the app again; downtime is about half a minute and
+sensors buffer meanwhile. The data directory is not touched; `schema.sql` migrates the
+database on start. Log: `logs/update.log`; a failed install is shown in the status window
+at the next start. `FORIQ_UPDATE_BASE=<url>` points the check at another release
+directory (tests). Updating by hand still works: quit Foriq and run
+`curl -fsSL https://foriq.de/install | bash`.
 
 ## Usage
 

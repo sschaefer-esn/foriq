@@ -8,6 +8,8 @@ const DEFAULTS = {
   // Autostart is registered only on the very first start. After that the state
   // of the macOS login items applies (the user can change it there).
   autostartInitialized: false,
+  // Look for a new release once a day (only a check; installing needs a click).
+  checkUpdates: true,
   // "en" | "de"; null = never chosen → i18n.DEFAULT_LOCALE ("de"), see i18n.resolveLocale.
   language: null,
 };

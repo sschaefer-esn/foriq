@@ -21,7 +21,8 @@ const { Supervisor, statusLogger } = require("./supervisor");
 const { SensorManager } = require("./sensor");
 const { Settings } = require("./settings");
 const { createTrayIcon } = require("./tray-icon");
-const { APP_NAME } = require("./constants");
+const { Updater } = require("./updater");
+const { APP_NAME, GITHUB_REPO } = require("./constants");
 const i18n = require("./i18n");
 
 const { t, text } = i18n;
@@ -43,6 +44,7 @@ if (process.argv.includes("--quit") || !app.requestSingleInstanceLock()) {
   let reallyQuit = !app.isPackaged; // set only by the allowed ways to quit
   let shuttingDown = false;
   let sleepBlocker = null;
+  let updater;
 
   // ─── Language ────────────────────────────────────────────────
   function applyLocale() {
@@ -78,6 +80,46 @@ if (process.argv.includes("--quit") || !app.requestSingleInstanceLock()) {
     return out;
   }
 
+  function localizeUpdate(u) {
+    const vars = { version: u.current, latest: u.latest, current: u.current, pct: u.progress || 0 };
+    let detail;
+    if (u.phase === "checking") detail = t("update.checking");
+    else if (u.phase === "available") detail = t("update.available", vars);
+    else if (u.phase === "downloading") detail = t("update.downloading", vars);
+    else if (u.phase === "installing") detail = t("update.installing", vars);
+    else if (u.phase === "error") detail = text(u.error);
+    else if (u.phase === "current") detail = t("update.current", vars);
+    else detail = settings.get("checkUpdates") ? t("update.idle") : t("update.off");
+    return { ...u, label: t("update.label", vars), detail, enabled: settings.get("checkUpdates") };
+  }
+
+  function sendUpdate() {
+    if (win && !win.isDestroyed()) win.webContents.send("update", localizeUpdate(updater.status()));
+  }
+
+  async function installUpdate() {
+    const u = updater.status();
+    if (u.phase !== "available" || !u.canInstall) return;
+    const opts = {
+      type: "question",
+      buttons: [t("update.confirm.ok"), t("common.cancel")],
+      defaultId: 0,
+      cancelId: 1,
+      message: t("update.confirm.message", { latest: u.latest }),
+      detail: t("update.confirm.detail"),
+    };
+    const { response } = win && !win.isDestroyed() ? await dialog.showMessageBox(win, opts) : await dialog.showMessageBox(opts);
+    if (response !== 0) return;
+    await updater.install(quitForReal);
+  }
+
+  // Check once after start, then whenever the last check is older than a day.
+  function scheduleUpdateChecks() {
+    const due = () => settings.get("checkUpdates") && (!updater.state.checkedAt || Date.now() - updater.state.checkedAt > 24 * 3600e3);
+    setTimeout(() => due() && updater.check(), 20000);
+    setInterval(() => due() && updater.check(), 3600e3);
+  }
+
   // Language switch from the status window: rebuild menus, re-render the window.
   function changeLanguage(locale) {
     if (!i18n.LOCALES.includes(locale)) return;
@@ -89,6 +131,7 @@ if (process.argv.includes("--quit") || !app.requestSingleInstanceLock()) {
       win.webContents.send("i18n", i18nPayload());
       win.webContents.send("status", localizeStatus(supervisor.status()));
       win.webContents.send("sensor", localizeSensor(sensor.status()));
+      sendUpdate();
     }
   }
 
@@ -96,7 +139,7 @@ if (process.argv.includes("--quit") || !app.requestSingleInstanceLock()) {
     if (!win) {
       win = new BrowserWindow({
         width: 440,
-        height: 680,
+        height: 730,
         resizable: false,
         fullscreenable: false,
         maximizable: false,
@@ -188,7 +231,12 @@ if (process.argv.includes("--quit") || !app.requestSingleInstanceLock()) {
   }
 
   function settingsStatus() {
-    return { autostart: autostartStatus(), preventSleep: settings.get("preventSleep"), language: i18n.getLocale() };
+    return {
+      autostart: autostartStatus(),
+      preventSleep: settings.get("preventSleep"),
+      checkUpdates: settings.get("checkUpdates"),
+      language: i18n.getLocale(),
+    };
   }
 
   // ─── Menus ───────────────────────────────────────────────────
@@ -225,6 +273,9 @@ if (process.argv.includes("--quit") || !app.requestSingleInstanceLock()) {
         { type: "separator" },
         { label: t("tray.openBrowser"), click: openBrowser, enabled: status.ready },
         { label: t("tray.statusWindow"), click: showWindow },
+        ...(updater && updater.status().phase === "available" && updater.status().canInstall
+          ? [{ label: t("tray.update", { latest: updater.status().latest }), click: () => { showWindow(); installUpdate(); } }]
+          : []),
         { type: "separator" },
         status.running
           ? { label: t("tray.stopServices"), click: () => supervisor.stopAll() }
@@ -245,6 +296,22 @@ if (process.argv.includes("--quit") || !app.requestSingleInstanceLock()) {
     settings = new Settings(app.getPath("userData"));
     applyLocale();
     supervisor = new Supervisor({ userData: app.getPath("userData") });
+
+    // Updates: only the installed app can replace itself (dev: check only).
+    updater = new Updater({
+      currentVersion: app.getVersion(),
+      repo: GITHUB_REPO,
+      baseUrl: process.env.FORIQ_UPDATE_BASE,
+      userData: app.getPath("userData"),
+      cacheDir: path.join(app.getPath("cache"), APP_NAME, "updates"),
+      logDir: supervisor.paths.logDir,
+      appPath: app.isPackaged ? path.resolve(process.execPath, "..", "..", "..") : null,
+      installScript: app.isPackaged ? path.join(process.resourcesPath, "foriq", "install.sh") : null,
+    });
+    updater.on("state", (u) => {
+      sendUpdate();
+      if (["available", "current", "error"].includes(u.phase)) updateTray(supervisor.status());
+    });
 
     // First start: enable autostart (the default). Not for test runs with their
     // own data dir – that would be a real system login item.
@@ -304,6 +371,7 @@ if (process.argv.includes("--quit") || !app.requestSingleInstanceLock()) {
 
     ipcMain.handle("status", () => localizeStatus(supervisor.status()));
     ipcMain.handle("i18n", () => i18nPayload());
+    ipcMain.handle("update", () => localizeUpdate(updater.status()));
     ipcMain.handle("settings", () => settingsStatus());
     ipcMain.handle("set-setting", (_e, key, value) => {
       if (key === "autostart") setAutostart(!!value);
@@ -312,6 +380,11 @@ if (process.argv.includes("--quit") || !app.requestSingleInstanceLock()) {
         updateSleepBlocker();
       }
       if (key === "language") changeLanguage(value);
+      if (key === "checkUpdates") {
+        settings.set("checkUpdates", !!value);
+        if (value) updater.check();
+        else sendUpdate();
+      }
       return settingsStatus();
     });
     ipcMain.handle("action", async (_e, action, arg) => {
@@ -334,6 +407,15 @@ if (process.argv.includes("--quit") || !app.requestSingleInstanceLock()) {
           return resetOwnerPassword();
         case "backup-now":
           return supervisor.backups.run();
+        case "update-check":
+          return updater.check();
+        case "update-install":
+          return installUpdate();
+        case "update-notes": {
+          const u = updater.status();
+          if (u.notesUrl) shell.openExternal(u.notesUrl);
+          return;
+        }
         case "open-backups":
           fs.mkdirSync(supervisor.paths.backupDir, { recursive: true });
           return shell.openPath(supervisor.paths.backupDir);
@@ -384,6 +466,7 @@ if (process.argv.includes("--quit") || !app.requestSingleInstanceLock()) {
     // After autostart stay in the background (Dock dot + menu bar only).
     if (!(app.isPackaged && app.getLoginItemSettings().wasOpenedAtLogin)) showWindow();
     supervisor.startAll().catch((err) => console.error("Start failed:", err));
+    scheduleUpdateChecks();
   });
 
   app.on("before-quit", (e) => {

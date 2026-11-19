@@ -97,6 +97,12 @@ One line in the Terminal installs or updates Foriq from the newest
 curl -fsSL https://foriq.de/install | bash
 ```
 
+**Never used the Terminal?** Download this repository (*Code* › *Download ZIP* on
+GitHub, or `git clone`), open the folder in Claude Code or Codex and ask
+*"What do I have to do?"* / *„Was muss ich tun?"*. The agent follows
+[docs/agents/getting-started.md](docs/agents/getting-started.md) and leads you through
+installation, sensor set-up and mounting, running the commands for you.
+
 It downloads the DMG, checks its SHA-256 and copies `Foriq.app` to `/Applications`
 (why the Terminal: [foriq-app/README.md › Signing](foriq-app/README.md#signing)).
 To build and install your own variant instead: `./build-app.sh` (see
@@ -253,11 +259,15 @@ Foriq is meant to be adapted with coding agents such as Claude Code. Start one i
 repository folder and describe your machine or your hardware; the agent finds the
 project rules in [CLAUDE.md](CLAUDE.md) / [AGENTS.md](AGENTS.md) and these playbooks:
 
+- [Getting started](docs/agents/getting-started.md): ask the agent "What do I have to
+  do?" and it leads you from an empty Mac to counting sensors – checks the Mac,
+  installs Foriq, sets up sensors, installs build tools if you want your own variant.
 - [Fit stroke counting to your machines](docs/agents/tune-detector.md): what the agent
   asks, which settings it changes, how it checks the result, when it changes the algorithm.
 - [Port the firmware to another ESP32 board](docs/agents/port-hardware.md).
 
-In Claude Code they are also available as `/tune-detector` and `/port-hardware`.
+In Claude Code they are also available as `/getting-started`, `/tune-detector` and
+`/port-hardware`.
 
 ## Repository layout
 

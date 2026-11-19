@@ -107,6 +107,7 @@ pio run -e m5sticks3 -t erase --upload-port <port>   # whole flash incl. NVS (po
 
 ## Agent playbooks
 
+- User asks what to do / how to start / needs set-up help → `docs/agents/getting-started.md` (skill `/getting-started`).
 - User describes a machine or wrong counts → `docs/agents/tune-detector.md` (skill `/tune-detector`).
 - Other ESP32 board or accelerometer → `docs/agents/port-hardware.md` (skill `/port-hardware`).
 

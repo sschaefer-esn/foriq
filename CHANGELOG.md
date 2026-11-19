@@ -20,7 +20,8 @@ self-hosted application that runs entirely in the local network.
   installs the newest release.
 - Backend: `FORIQ_NO_WORKERS=1` disables the background workers.
 - Playbooks for coding agents (`docs/agents/`, `AGENTS.md`, Claude Code skills
-  `/tune-detector` and `/port-hardware`); READMEs for the backend and the firmware;
+  `/getting-started`, `/tune-detector` and `/port-hardware`); `getting-started.md` leads
+  non-technical users from an empty Mac to counting sensors; READMEs for the backend and the firmware;
   `docs/releasing.md`.
 
 ### Changed

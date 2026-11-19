@@ -55,7 +55,7 @@ export default function LoginForm() {
         <CardTitle>{t("auth.login.title")}</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form method="post" onSubmit={handleSubmit} className="space-y-4">
           {error && (
             <p className="text-sm text-destructive">{error}</p>
           )}
@@ -63,6 +63,7 @@ export default function LoginForm() {
             <Label htmlFor="email">{t("auth.field.username")}</Label>
             <Input
               id="email"
+              name="username"
               type="text"
               autoCapitalize="none"
               autoComplete="username"
@@ -81,7 +82,9 @@ export default function LoginForm() {
             <Label htmlFor="password">{t("auth.field.password")}</Label>
             <Input
               id="password"
+              name="password"
               type="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(e) => {

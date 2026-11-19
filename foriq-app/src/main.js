@@ -181,10 +181,9 @@ if (process.argv.includes("--quit") || !app.requestSingleInstanceLock()) {
     const s = supervisor.status();
     // Only once the backend is healthy (it also serves the web UI).
     if (!s.ready) return;
-    // foriq.local if mDNS is up and the LAN IP is reachable; otherwise localhost
-    // (always works on this computer, even with a blocking firewall).
-    const mdnsOk = s.services.find((x) => x.name === "mdns")?.state === "running";
-    shell.openExternal(mdnsOk && s.lanOk ? s.publicUrl : s.localUrl);
+    // Always foriq.local; only test instances without mDNS (FORIQ_NO_MDNS=1) use localhost.
+    const hasMdns = s.services.some((x) => x.name === "mdns");
+    shell.openExternal(hasMdns ? s.publicUrl : s.localUrl);
   }
 
   async function confirmQuit() {

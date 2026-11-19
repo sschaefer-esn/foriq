@@ -6,6 +6,15 @@ Firmware versions follow `firmware-cpp/VERSION`.
 
 ## [Unreleased]
 
+## [0.2.1] – 2026-11-19
+
+### Fixed
+
+- "Open in browser" in the Mac app always opens http://foriq.local:8420 instead of
+  falling back to localhost (test instances without mDNS still use localhost).
+- Login and registration forms carry field names and autocomplete hints, so browsers
+  offer to save and fill the password.
+
 ## [0.2.0] – 2026-11-19
 
 ### Added

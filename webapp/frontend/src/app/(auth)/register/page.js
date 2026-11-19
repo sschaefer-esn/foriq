@@ -101,6 +101,7 @@ export default function RegisterPage() {
                 <Label htmlFor="email">{t("auth.field.username")}</Label>
                 <Input
                   id="email"
+                  name="username"
                   type="text"
                   placeholder="admin"
                   autoCapitalize="none"
@@ -114,6 +115,7 @@ export default function RegisterPage() {
                 <Label htmlFor="password">{t("auth.field.password")}</Label>
                 <Input
                   id="password"
+                  name="password"
                   type="password"
                   minLength={8}
                   autoComplete="new-password"
